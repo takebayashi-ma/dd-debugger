@@ -1,0 +1,18 @@
+services:
+  dd-debugger:
+    build: .
+    container_name: dd-debugger
+    ports:
+      - "8126:8126" # APM HTTP intake (msgpack)
+      - "8125:8125/udp" # DogStatsD (metrics)
+    environment:
+      - LOG_PRETTY_JSON=true
+      - QUIET_HTTP_LOG=false
+      - ENABLE_METRICS=false
+  # your-app:
+  #   アプリケーション側コンテナでdatadogの設定を行い環境変数をセットする
+  #   environment:
+  #     DD_ENV: "dev"
+  #     DD_SERVICE: "your-app"
+  #     DD_TRACE_DEBUG: "true" # 送信のデバッグをログに出力したい場合
+  #     DD_AGENT_HOST: "dd-debugger" # Datadogに通信が行かないようにする
